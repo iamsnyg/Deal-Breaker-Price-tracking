@@ -63,7 +63,7 @@ export default function Hero({ children }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 min-h-screen w-full ">
         {/* Navigation */}
         <nav className="glow flex justify-between items-center px-6 md:px-12 py-6 rounded-full backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl m-6 hover:bg-white/10 transition-all duration-300">
           <div>
