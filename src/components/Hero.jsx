@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-export default function Hero() {
+export default function Hero({ children }) {
   const bgRef = useRef(null);
 
   useEffect(() => {
@@ -24,22 +24,41 @@ export default function Hero() {
 
   return (
     <main className="min-h-screen bg-linear-to-br from-slate-950 via-blue-950 to-slate-900 text-white overflow-hidden">
+      {/* Extra drift animations for more noticeable movement */}
+      <style>{`
+        @keyframes driftA {
+          0% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(120px, -160px) scale(1.06); }
+          50% { transform: translate(-100px, -80px) scale(1.1); }
+          75% { transform: translate(-160px, 120px) scale(1.04); }
+          100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes driftB {
+          0% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(-140px, 140px) scale(1.05); }
+          50% { transform: translate(160px, 60px) scale(1.08); }
+          75% { transform: translate(100px, -140px) scale(1.03); }
+          100% { transform: translate(0, 0) scale(1); }
+        }
+        .driftA { animation: driftA 18s ease-in-out infinite; }
+        .driftB { animation: driftB 24s ease-in-out infinite; }
+      `}</style>
       {/* Animated background elements with mouse parallax */}
       <div ref={bgRef} className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="parallax absolute top-20 left-1/4" data-speed="0.06">
-          <div className="float1 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl"></div>
+          <div className="float1 driftA w-80 h-80 bg-blue-500/20 rounded-full blur-3xl"></div>
         </div>
         <div className="parallax absolute bottom-32 right-1/4" data-speed="0.08">
-          <div className="float2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+          <div className="float2 driftB w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
         </div>
         <div className="parallax absolute top-1/2 right-20" data-speed="0.05">
-          <div className="float3 w-72 h-72 bg-pink-500/15 rounded-full blur-3xl"></div>
+          <div className="float3 driftA w-72 h-72 bg-pink-500/15 rounded-full blur-3xl"></div>
         </div>
         <div className="parallax absolute top-1/3 left-10" data-speed="0.04">
-          <div className="w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="driftB w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
         </div>
         <div className="parallax absolute bottom-20 left-1/3" data-speed="0.07">
-          <div className="w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl animate-pulse"></div>
+          <div className="driftA w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl animate-pulse"></div>
         </div>
       </div>
 
@@ -64,17 +83,7 @@ export default function Hero() {
         </nav>
 
         {/* Hero Section */}
-        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-150px)] px-6 text-center">
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent gradient-animate">
-            Track Prices Smarter
-          </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl">
-            Real-time price monitoring across all your favorite products. Get alerts and never miss a deal again.
-          </p>
-          <Button className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-6 text-lg rounded-full hover:shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 gradient-animate">
-            Get Started Now
-          </Button>
-        </div>
+        {children}
       </div>
     </main>
   );
