@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import {LogInIcon, SignUpIcon} from "lucide-react"
 
 export default function Hero({ children }) {
   const bgRef = useRef(null);
@@ -65,8 +66,8 @@ export default function Hero({ children }) {
       {/* Content */}
       <div className="relative z-10 min-h-screen w-full ">
         {/* Navigation */}
-        <nav className="glow flex justify-between items-center px-6 md:px-12 py-6 rounded-full backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl m-6 hover:bg-white/10 transition-all duration-300">
-          <div>
+        <nav className="glow flex justify-between items-center px-6 md:px-12 pt-6 rounded-full backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl m-6 hover:bg-white/10 transition-all duration-300">
+          <div className="flex items-center gap-2 pb-5">
             <Image
               src="/logo.png"
               alt="Logo"
@@ -75,15 +76,18 @@ export default function Hero({ children }) {
               className="hover:scale-105 transition-transform"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 pb-5">
             <Button className="bg-linear-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-blue-500/50 transition-all">
-              Sign Up
+              <LogInIcon className="mr-2 h-4 w-4" />
+              Log In
             </Button>
           </div>
         </nav>
 
         {/* Hero Section */}
-        {children}
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-4 lg:px-8 pt-20 pb-16">
+          {children}
+        </div>
       </div>
     </main>
   );
