@@ -14,13 +14,15 @@ const AuthButton = ({ user }) => {
     if (user) {
         return (
             <form action={signOut}>
-                <Button
-                    type="submit"
-                    className="bg-linear-to-r from-red-600 to-yellow-600 hover:shadow-lg hover:shadow-red-500/50 transition-all"
-                >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
-                </Button>
+                <div>
+                    <Button
+                        type="submit"
+                        className="bg-linear-to-r from-red-600 to-yellow-600 hover:shadow-lg hover:shadow-red-500/50 transition-all"
+                    >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Sign Out
+                    </Button>
+                </div>
             </form>
         );
     }

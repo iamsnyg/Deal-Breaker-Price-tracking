@@ -112,6 +112,7 @@ export async function getProduct() {
             console.error('Error fetching product:', error);
             return { error: 'Failed to fetch product' };
         }
+        console.log('Product Data:', data);
         return data || [];
     } catch (error) {
         console.error('Error fetching product:', error);
