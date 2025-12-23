@@ -1,11 +1,15 @@
 import AddProductForm from "@/components/addProductForm";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Home({ children }) {
+export default async function Home({ children }) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <Hero>
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      {/* <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-green-300 mb-6 leading-tight ">
           Welcome to Bargn, Your Ultimate Price Tracking Companion!
         </h1>
@@ -17,10 +21,10 @@ export default function Home({ children }) {
             Get Started
           </Button>
         </div>
-      </div>
+      </div> */}
 
       <div className="w-full flex justify-center">
-        <AddProductForm  />
+        <AddProductForm user={user} />
       </div>
       {children}
     </Hero>

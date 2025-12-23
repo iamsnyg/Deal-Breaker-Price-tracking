@@ -77,9 +77,6 @@ export async function addProduct(formData) {
             product,
             message: isUpdate ? 'Product updated successfully' : 'Product added successfully'
         };
-
-        
-        
     } catch (error) {
         console.error('Error adding product:', error);
         return { error: error.message || 'Failed to add product' };
@@ -116,6 +113,23 @@ export async function getProduct() {
         return data || [];
     } catch (error) {
         console.error('Error fetching product:', error);
-        return { error: 'Failed to fetch product' };
+        return [];
+    }
+}
+
+export async function getPriceHistory(productId){
+    try {
+        const supabase = await createClient();
+        const { data, error } = await supabase.from('price_history').select('*').eq('product_id', productId).order('checked_at', { ascending: true });
+
+        if (error) {
+            console.log('Error fetching price history:', error);
+            return { error: 'Failed to fetch price history' };
+        }
+        return data || [];
+    } catch (error) {
+        console.log('Error fetching price history:', error);
+        return [];
+        
     }
 }
