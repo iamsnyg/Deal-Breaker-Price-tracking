@@ -6,14 +6,13 @@ import { Input } from "./ui/input";
 import { Loader2 } from "lucide-react";
 import { AuthModel } from "./AuthModel";
 import { addProduct } from "@/app/action";
+import { toast } from "sonner";
 
 
 const AddProductForm = ({ user}) => {
     const [productUrl, setProductUrl] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [showAuthModal, setShowAuthModal] = React.useState(false);
-
-    console.log("AddProductForm User:===>", user);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +29,6 @@ const AddProductForm = ({ user}) => {
         formData.append("url", productUrl);
 
         const result = await addProduct(formData);
-
         if (result.error) {
             toast.error(result.error);
         } else {

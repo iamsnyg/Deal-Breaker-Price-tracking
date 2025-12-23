@@ -9,7 +9,7 @@ import { signOut } from "@/app/action";
 
 const AuthButton = ({ user }) => {
     const [showAuthModal, setShowAuthModal] = React.useState(false);
-    console.log("AuthButton User:", user);
+    // console.log("AuthButton User:", user);
 
     if (user) {
         return (

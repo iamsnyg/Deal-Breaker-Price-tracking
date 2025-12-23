@@ -46,7 +46,7 @@ export default function Hero({ children }) {
     return () => window.removeEventListener('mousemove', handleMove);
   }, []);
 
-  console.log("Hero User:", user);
+  // console.log("Hero User:", user);
 
   return (
     <main className="min-h-screen bg-linear-to-br from-slate-950 via-blue-950 to-slate-900 text-white overflow-hidden">

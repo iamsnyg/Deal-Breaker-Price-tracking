@@ -1,10 +1,21 @@
 import Firecrawl from '@mendable/firecrawl-js';
 
 const firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY });
+const TIMEOUT_MS = 120000; // 2 minutes
+
+function withTimeout(promise, ms) {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error(`Search timed out after ${ms / 1000} seconds`)), ms)
+        )
+    ]);
+}
 
 export async function scrapeProduct(url) {
     try {
-        const result = await firecrawl.scrape(url, {
+        const result = await withTimeout(
+            firecrawl.scrape(url, {
             formats: [{
                 type: 'json',
                 schema: {
@@ -12,28 +23,31 @@ export async function scrapeProduct(url) {
                     required: ['productName', 'currentPrice'],
                     properties: {
                         productName: {
-                            type: 'string'                        
+                            type: "string"                       
                         },
                         currentPrice: {
-                            type: 'string'                        
+                            type: "string"                        
                         },
                         currencyCode: {
-                            type: 'string'                        
+                            type: "string"                        
                         },
                         productImageUrl: {
-                            type: 'string'                        
+                            type: "string"                        
                         }
                     }
                 },
                 prompt: "Extract the product name as 'productName', current price as a number as 'currentPrice', as well as the currency code (e.g., USD, EUR, INR etc.) as 'currencyCode', and the product image URL as 'productImageUrl' from the given e-commerce product page URL if available. "
             }]
-        })
+            })
+        , TIMEOUT_MS);
         const extractedData = result.json;
 
         if(!extractedData.productName || !extractedData.currentPrice) {
             throw new Error('Essential product details are missing in the scraped data.');
         }
 
+
+        console.log("All Set to return extracted data from scrapeProduct..............");
         return extractedData;
     } catch (error) {
         console.error('Error scraping product data:', error);

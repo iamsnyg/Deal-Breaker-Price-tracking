@@ -30,6 +30,7 @@ export async function addProduct(formData) {
 
         const productData = await scrapeProduct(url);
 
+        console.log('Scraped Product Data(Backend):', productData);
         if (!productData.productName || !productData.currentPrice) {
             console.log('Scraped Data:', productData);
             return { error: 'Product details not found' };
@@ -54,6 +55,7 @@ export async function addProduct(formData) {
         }, { onConflict: 'user_id,url',
             ignoreDuplicates: false
         }).select().single();
+
 
         if (error) {
             console.error('Error upserting product:', error);
