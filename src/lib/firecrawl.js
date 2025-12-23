@@ -9,7 +9,7 @@ export async function scrapeProduct(url) {
                 type: 'json',
                 schema: {
                     type: 'object',
-                    required: ['productName', 'currentPrice', 'currencyCode'],
+                    required: ['productName', 'currentPrice'],
                     properties: {
                         productName: {
                             type: 'string'                        
@@ -30,7 +30,7 @@ export async function scrapeProduct(url) {
         })
         const extractedData = result.json;
 
-        if(!extractedData.productName || !extractedData.currentPrice || !extractedData.currencyCode) {
+        if(!extractedData.productName || !extractedData.currentPrice) {
             throw new Error('Essential product details are missing in the scraped data.');
         }
 
