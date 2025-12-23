@@ -1,11 +1,34 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-import {LogInIcon, SignUpIcon} from "lucide-react"
+import { useEffect, useRef, useState } from "react";
+import AuthButton from "./AuthButton";
+import { createClient } from "@/utils/supabase/client";
 
 export default function Hero({ children }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    
+    // Get initial user
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    // Subscribe to auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   const bgRef = useRef(null);
+
+
 
   useEffect(() => {
     const handleMove = (e) => {
@@ -76,12 +99,13 @@ export default function Hero({ children }) {
               className="hover:scale-105 transition-transform"
             />
           </div>
-          <div className="flex gap-4 pb-5">
+          {/* <div className="flex gap-4 pb-5">
             <Button className="bg-linear-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-blue-500/50 transition-all">
               <LogInIcon className="mr-2 h-4 w-4" />
               Log In
             </Button>
-          </div>
+          </div> */}
+          <AuthButton user={user} />
         </nav>
 
         {/* Hero Section */}
