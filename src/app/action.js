@@ -103,3 +103,19 @@ export async function deleteProduct(productId) {
 
 
 }
+
+export async function getProduct() {
+    try {
+        const supabase = await createClient();
+        const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+
+        if (error) {
+            console.error('Error fetching product:', error);
+            return { error: 'Failed to fetch product' };
+        }
+        return data || [];
+    } catch (error) {
+        console.error('Error fetching product:', error);
+        return { error: 'Failed to fetch product' };
+    }
+}
