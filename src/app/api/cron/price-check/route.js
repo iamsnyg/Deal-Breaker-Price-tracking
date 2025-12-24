@@ -1,3 +1,4 @@
+import { sendPriceAlertEmail } from "@/lib/email";
 import { scrapeProduct } from "@/lib/firecrawl";
 import { createClient } from "@supabase/supabase-js";
 
@@ -46,7 +47,7 @@ export async function POST(request){
                     results.failed += 1;
                     continue;
                 }
-                
+
                 const newPrice = parseFloat(productData.currentPrice);
                 const oldPrice = parseFloat(product.current_price);
                 
@@ -75,6 +76,16 @@ export async function POST(request){
 
                         if(user?.email){
                             // Send alert email logic here
+                            const emailResult = await sendPriceAlertEmail(
+                                user.email,
+                                product,
+                                oldPrice,
+                                newPrice
+                            );
+
+                            if(emailResult.success){
+                                results.alertsSent += 1;
+                            }
 
                         }
                     }
