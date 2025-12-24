@@ -51,6 +51,7 @@ export default async function Home({ children }) {
     return (
         <Hero>
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 pt-20 pb-10">
+                <h1 className="text-5xl text-green-300">iamdemo.vercel.app</h1>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-green-300 mb-6 leading-tight ">
                     Welcome to Bargn, Your Ultimate Price Tracking Companion!
                 </h1>
