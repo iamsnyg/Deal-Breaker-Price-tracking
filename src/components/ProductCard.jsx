@@ -102,7 +102,7 @@ const ProductCard = ({ product }) => {
                     <Dialog className="">
                     <DialogTrigger asChild>
                         <Button
-                             className={`w-full sm:w-auto gap-2 whitespace-nowrap text-white rounded-md transition-all duration-200 ring-1 ${
+                            className={`w-full sm:w-auto gap-2 whitespace-nowrap text-white rounded-md transition-all duration-200 ring-1 ${
                                 showChart
                                     ? 'bg-linear-to-r from-emerald-700 to-green-600 hover:from-emerald-600 hover:to-green-500 ring-emerald-500/30 shadow-lg hover:shadow-emerald-500/30'
                                     : 'bg-linear-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 ring-emerald-500/20 shadow hover:shadow-emerald-400/30'
