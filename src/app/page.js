@@ -1,8 +1,16 @@
 import AddProductForm from "@/components/addProductForm";
 import Hero from "@/components/Hero";
 import { createClient } from "@/utils/supabase/server";
-import { Activity, GitCompare, Heart, TrendingDown, TrendingUpDown } from "lucide-react";
+import {
+    Activity,
+    GitCompare,
+    Heart,
+    TrendingDown,
+    TrendingUpDown,
+} from "lucide-react";
 import { getProduct } from "./action";
+import ProductCard from "@/components/ProductCard";
+// import { DialogTrigger } from "@/components/ui/dialog";
 
 export default async function Home({ children }) {
     const supabase = await createClient();
@@ -18,7 +26,6 @@ export default async function Home({ children }) {
             timeStyle: "short",
             timeZone: "UTC",
         }).format(new Date(isoString));
-
 
     const feature = [
         {
@@ -47,8 +54,12 @@ export default async function Home({ children }) {
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-green-300 mb-6 leading-tight ">
                     Welcome to Bargn, Your Ultimate Price Tracking Companion!
                 </h1>
-                <p
-                    className="bg-linear-to-bl from-green-100/35 to-green-400 rounded-4xl p-1 px-5 font-extrabold text-white">Created by: ❤️<span className="font-extrabold text-green-400">iamsnyg</span></p>
+                <p className="bg-linear-to-bl from-green-100/35 to-green-400 rounded-4xl p-1 px-5 font-extrabold text-white">
+                    Created by: ❤️
+                    <span className="font-extrabold text-green-400">
+                        iamsnyg
+                    </span>
+                </p>
                 <p className="text-lg sm:text-xl md:text-2xl text-white/80 mt-10 mb-3 max-w-3xl">
                     Bargn is Price Tracking for User. Easily monitor prices,
                     discounts, and deals on your favorite Websites and never
@@ -79,54 +90,17 @@ export default async function Home({ children }) {
             </section>
 
             {user && products.length > 0 && (
-                <section className="bg-gray-900/50 rounded-lg mx-auto px-4 sm:px-6 lg:px-8 mb-16  max-w-11/12 ">
-                    <div className="relative z-10">
-                        <h3 className="relative z-10 flex flex-col items-center justify-center text-left px-4 sm:px-6 lg:px-8 pt-10 pb-6 ">
-                            <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-green-300 mb-6 leading-tight ">
-                                Your Tracked Products
-                            </span>
-                        </h3>
-                        <div className="relative z-10 grid gap-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 md:grid-cols-2 lg:grid-cols-3">
+                <section className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 mb-16">
+                    <div className="w-full  mx-auto bg-gray-500/10 p-8 rounded-lg shadow-lg">
+                        <h2 className="text-4xl sm:text-5xl font-extrabold text-green-300 mb-12 text-center">
+                            Your Tracked Products
+                        </h2>
+                        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-7xl w-5xl mx-auto">
                             {products.map((product) => (
-                                <div
+                                <ProductCard
                                     key={product.id}
-                                    className="bg-gray-800/50 rounded-lg p-6 hover:scale-[1.02] transition-transform duration-300"
-                                >
-                                    <div className="flex items-center mb-4">
-                                        {product.image_url ? (
-                                            <img
-                                                src={product.image_url}
-                                                alt={product.name}
-                                                className="w-20 h-20 object-contain mr-4 rounded-lg"
-                                            />
-                                        ) : (
-                                            <div className="w-16 h-16 bg-gray-700 flex items-center justify-center mr-4 rounded-lg">
-                                                <TrendingUpDown className="text-gray-400" />
-                                            </div>
-                                        )}
-                                        <h4 className="text-lg font-semibold text-white">
-                                            {product.name}
-                                        </h4>
-                                    </div>
-                                    <p className="text-white/80 mb-2">
-                                        Current Price:{" "}
-                                        <span className="font-bold text-green-400">
-                                            {product.current_price} {product.currency}
-                                        </span>
-                                    </p>
-                                    <p className="text-white/80 mb-4">
-                                        Last Updated:{" "}
-                                        {formatDate(product.updated_at)}
-                                    </p>
-                                    <a
-                                        href={product.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-400 hover:underline"
-                                    >
-                                        View Product
-                                    </a>
-                                </div>
+                                    product={product}
+                                />
                             ))}
                         </div>
                     </div>
@@ -155,19 +129,21 @@ export default async function Home({ children }) {
 
             {products.length === 0 && (
                 <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-16 ">
-                {feature.map(({ title, description, icon: Icon }) => (
-                  <div
-                    key={title}
-                    className="bg-gray-900/50 rounded-lg p-6 text-center mr-10"
-                  >
-                    <div className=" mb-4 flex items-center justify-center w-12 h-12 mx-auto bg-green-600/20 rounded-full">
-                      <Icon className=" text-green-300 " />
-                    </div>
-                    <h3 className=" mt-2 text-lg font-semibold text-white">{title}</h3>
-                    <p className="text-white/80">{description}</p>
-                  </div>
-                ))}
-              </div>
+                    {feature.map(({ title, description, icon: Icon }) => (
+                        <div
+                            key={title}
+                            className="bg-gray-900/50 rounded-lg p-6 text-center mr-10"
+                        >
+                            <div className=" mb-4 flex items-center justify-center w-12 h-12 mx-auto bg-green-600/20 rounded-full">
+                                <Icon className=" text-green-300 " />
+                            </div>
+                            <h3 className=" mt-2 text-lg font-semibold text-white">
+                                {title}
+                            </h3>
+                            <p className="text-white/80">{description}</p>
+                        </div>
+                    ))}
+                </div>
             )}
         </Hero>
     );

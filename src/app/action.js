@@ -30,7 +30,7 @@ export async function addProduct(formData) {
 
         const productData = await scrapeProduct(url);
 
-        console.log('Scraped Product Data(Backend):', productData);
+        // console.log('Scraped Product Data(Backend):', productData);
         if (!productData.productName || !productData.currentPrice) {
             console.log('Scraped Data:', productData);
             return { error: 'Product details not found' };
@@ -112,7 +112,7 @@ export async function getProduct() {
             console.error('Error fetching product:', error);
             return { error: 'Failed to fetch product' };
         }
-        console.log('Product Data:', data);
+        // console.log('Product Data:', data);
         return data || [];
     } catch (error) {
         console.error('Error fetching product:', error);
