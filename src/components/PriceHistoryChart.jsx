@@ -71,7 +71,7 @@ const PriceHistoryChart = ({ productId }) => {
     };
 
     return (
-        <div className="w-full h-96 bg-gray-900 rounded-lg shadow-lg p-4">
+        <div className="w-full h-[300px] sm:h-96 bg-gray-900 rounded-lg shadow-lg p-2 sm:p-4">
             {loading ? (
                 <div className="flex items-center justify-center h-full text-white/80">
                     <Loader2 className="animate-spin mr-2" />
@@ -82,12 +82,10 @@ const PriceHistoryChart = ({ productId }) => {
                     No price history yet. Start tracking to see trends.
                 </div>
             ) : (
-                <>
-                <ResponsiveContainer width="100%" height="100%" className="bg-gray-900 rounded-lg shadow-lg p-4">
+                <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                         data={data}
-                        margin={{ top: 20, right: 24, left: 0, bottom: 12 }}
-
+                        margin={{ top: 20, right: 12, left: 0, bottom: 12 }}
                     >
                         <defs>
                             <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
@@ -96,13 +94,21 @@ const PriceHistoryChart = ({ productId }) => {
                             </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="4 4" stroke="#ffffff1a" />
-                        <XAxis dataKey="date" stroke="#cbd5e1" tick={{ fill: "#cbd5e1" }} />
+                        <XAxis
+                            dataKey="date"
+                            stroke="#cbd5e1"
+                            tick={{ fill: "#cbd5e1", fontSize: 12 }}
+                        />
                         <YAxis
                             stroke="#cbd5e1"
-                            tick={{ fill: "#cbd5e1" }}
+                            tick={{ fill: "#cbd5e1", fontSize: 12 }}
                             tickFormatter={(v) => `${v}`}
+                            width={50}
                         />
-                        <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#34d399", strokeDasharray: "3 3" }} />
+                        <Tooltip
+                            content={<CustomTooltip />}
+                            cursor={{ stroke: "#34d399", strokeDasharray: "3 3" }}
+                        />
                         <Legend wrapperStyle={{ color: "#e2e8f0" }} />
                         <Line
                             type="monotone"
@@ -122,7 +128,6 @@ const PriceHistoryChart = ({ productId }) => {
                         {process.env.NODE_ENV === "development" && <RechartsDevtools />}
                     </LineChart>
                 </ResponsiveContainer>
-                </>
             )}
         </div>
     );
