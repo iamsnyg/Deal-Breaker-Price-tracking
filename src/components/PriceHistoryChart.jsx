@@ -82,6 +82,7 @@ const PriceHistoryChart = ({ productId }) => {
                     No price history yet. Start tracking to see trends.
                 </div>
             ) : (
+                <>
                 <ResponsiveContainer width="100%" height="100%" className="bg-gray-900 rounded-lg shadow-lg p-4">
                     <LineChart
                         data={data}
@@ -121,6 +122,7 @@ const PriceHistoryChart = ({ productId }) => {
                         {process.env.NODE_ENV === "development" && <RechartsDevtools />}
                     </LineChart>
                 </ResponsiveContainer>
+                </>
             )}
         </div>
     );

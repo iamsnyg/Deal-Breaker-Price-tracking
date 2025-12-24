@@ -118,7 +118,7 @@ const ProductCard = ({ product }) => {
                     </DialogTrigger>
                     <DialogContent className="w-full max-w-3xl bg-gray-900 rounded-lg shadow-lg border-green-400/30 border text-white">
                         <DialogTitle className="text-white">Price History Chart</DialogTitle>
-                        <DialogDescription >
+                        <DialogDescription className="-mt-4 -pl-8">
                             <PriceHistoryChart productId={product.id} />
                         </DialogDescription>
                     </DialogContent>
